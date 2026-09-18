@@ -193,12 +193,7 @@ def GraphFusion_Train(train_dataloader, val_dataloader, device, model,features):
                    test_score,precision, recall, F1
                 ))
             print("Test total loss: ",totaltest_loss)
-            epochs.append(epoch)
-            allaccs.append(test_score)
-            allprecisions.append(precision)
-            allrecalls.append(recall)
-            allF1s.append(F1)
-            print("Test loss: ",totaltest_loss)
+            
 def ComputeGSLloss(z1: torch.Tensor, z2: torch.Tensor,z3: torch.Tensor):
 
     loss13=torch.exp(sim(z1,z3)/tau)
