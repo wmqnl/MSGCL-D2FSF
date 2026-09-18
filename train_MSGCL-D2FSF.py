@@ -153,11 +153,6 @@ def GraphFusion_Train(train_dataloader, val_dataloader, device, model,features):
     
     optimizer= torch.optim.Adam(model.parameters(), lr=learningrate, weight_decay=WD) #loss 太大-》sgd？
 #    
-    epochs=[]
-    allaccs=[]
-    allprecisions=[]
-    allrecalls=[]
-    allF1s=[]
     for epoch in range(500):  
         train_g3,edgeIndex_g1,edgeIndex_g2,edgeIndex_g3  =GraphFusion(traing2_edgesweight,traintextsim,train_dataloader, device, model,edge_index,edge_index_values,lab,features,alltraincates)
        
@@ -204,23 +199,6 @@ def GraphFusion_Train(train_dataloader, val_dataloader, device, model,features):
             allrecalls.append(recall)
             allF1s.append(F1)
             print("Test loss: ",totaltest_loss)
-    i=0
-    testmax=allaccs[i]
-    for i in range(len(allaccs)):
-        if testmax<=allaccs[i]:
-            testmax=allaccs[i]
-    maxind=0
-    for m in range(len(allaccs)):
-        if allaccs[m]==testmax:
-            print(m)
-            maxind=m
-    print("Testbestacc:",testmax)
-    print(
-           "Test best Acc.  {:.4f}, precision.  {:.4f}, recall.  {:.4f}, F1.  {:.4f}  ".format(
-                testmax,allprecisions[maxind], allrecalls[maxind], allF1s[maxind]
-        ))
-
-
 def ComputeGSLloss(z1: torch.Tensor, z2: torch.Tensor,z3: torch.Tensor):
 
     loss13=torch.exp(sim(z1,z3)/tau)
